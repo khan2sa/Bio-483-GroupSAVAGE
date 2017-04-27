@@ -1,0 +1,2232 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">   
+<script src="http://d3js.org/d3.v2.min.js?2.9.6"></script>
+<script src="/lib/w3.js"></script>
+<script src="histograms.js"></script>
+<script type="text/javascript" src="data.json"></script>
+<script type="text/javascript" src="javascrip.js"></script>
+<div class="w3-container w3-green" style="position:relative; left: 0px; top: 0px; width: 960px; text-align: left" >
+  <button style="position:absolute;  left: 822px; top: 14px; width: 100px; text-align: left" class="btn btn-primary" onclick="myFunction()">About Page</button>
+   <head>
+ 	<meta charset = "utf-8">
+ 	<link rel = "stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+ 	<link rel = "stylesheet" href = "style.css">
+ 	<script src="http://d3js.org/d3.v3.js"></script>
+ 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+ 	<script src="https://cdnjs.cloudflare.com/ajax/libs/d3-tip/0.6.7/d3-tip.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/jquery.roundslider/1.0/roundslider.min.js"></script>
+<link href="https://cdn.jsdelivr.net/jquery.roundslider/1.0/roundslider.min.css" rel="stylesheet"/>
+     
+</head>
+ <h3>Map of Healthcare-associated infections (HAIs) and related factors</h3>
+</div>
+<script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+    <link rel="stylesheet" href="http://tntvis.github.io/tnt.tooltip/build/tnt.tooltip.css" type="text/css"/>
+    <script src="http://tntvis.github.io/tnt.tooltip/build/tnt.tooltip.min.js"></script>
+    <style>
+        .tnt_tooltip {
+        	pointer-events : none;
+        }
+    </style>
+<style>
+
+.background {
+  fill: #bfbfbf;
+  pointer-events: stroke;
+  fill: #09284b
+}
+
+
+#states {
+  stroke: #000000;
+  stroke-width: .5px;
+}
+
+#states text {
+  fill: #000000;
+  stroke: none;
+  text-anchor:middle;
+  font-size: 0px;
+}
+
+#states .active {
+  fill: steelblue !important;
+}
+
+#states text.active {
+  font-size: 8px;
+  font-weight:bold;
+  fill: #ff1414;
+  stroke-width: 0px;
+  text-anchor:top;
+  padding-top: 55%;
+  fill: black !important;
+  stroke: #ff0505;
+}
+ 
+#sidebartext  {    
+    width: 33%;
+  	position: fixed;
+  	left: 660px;
+    top: 230px;
+    font-size: 15px;
+    font-weight:bold;
+}
+  
+
+input[type=text], select {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+input[type=submit] {
+    width: 100%;
+    background-color: #4CAF50;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+input[type=submit]:hover {
+    background-color: #d49b9c;
+}
+
+#entry {
+    border-radius: 5px;
+    background-color: #f2f2f2;
+    padding: 20px;
+}
+  
+</style>
+
+<body>
+
+
+</body>
+<body>
+  <div id="sidebartext" style="position:absolute; left: 650px"> 
+    <p  style="position:absolute;"></p>
+    <br><br>
+    <p1  style="position:absolute;"></p1>
+    <br><br>
+    <p2  style="position:absolute;"></p2>
+    <br><br>
+    <p3  style="position:absolute;"></p3>
+    <br><br>
+    <p4  style="position:absolute;"></p4>
+    <br><br>
+    <p5  style="position:absolute;"></p5>
+    <p6  style="position:absolute;"></p6>
+
+  </div>
+ 
+ 
+  <div id="clicker" class="w3-container w3-white" >
+    <h4>
+     Choose a catagory for the heat map:
+  </h4>
+
+  <p>	<button id="1" class="btn btn-primary" onclick="loop('1')">CLABSI</button>
+	<button id="2" class="btn btn-primary" onclick="loop('2')"> CAUTI </button>
+	<button id="3" class="btn btn-primary" onclick="loop('3')"> SSI </button>
+	<button id="4" class="btn btn-primary" onclick="loop('4')"> MRSA </button>
+    <button id="5"  class="btn btn-primary" onclick="loop('5')" > C. Difficile </button>
+    <div>
+      <h4 style="position:absolute; left: 615px; top: 58px;">
+     User entry data map and form:
+  </h4>
+         <h5 id= "legend1" style="color:blue; font-size:18px; position:absolute; left: 5px; top: 170px;  width: 960px;">
+      Heat Map for : Clostridium difficile HAI
+      </h5>
+      <h5 id= "legend2" style="color:orange; font-size:18px; position:absolute; left: 5px; top: 170px;  width: 960px;">
+      Heat Map for : Central line associated bloodstream infection 
+      </h5>
+      <h5 id= "legend3" style="color:red; font-size:18px; position:absolute; left: 5px; top: 170px;  width: 960px;">
+      Heat Map for : Methicillin-resistant Staphylococcus aureus HAI
+      </h5>
+      <h5 id= "legend4"style="color:	#FF1493; font-size:18px; position:absolute; left: 5px; top: 170px;  width: 960px;">
+      Heat Map for : Catheter associated urinary track infection
+      </h5>
+      <h5 id= "legend5" style="color:green; font-size:18px; position:absolute; left: 5px; top: 170px;  width: 960px;">
+      Heat Map for : Surgical site infection
+      </h5>
+    <button style="position:absolute; left: 746px; top: 95px;" id="6"  class="btn btn-primary" onclick="loop('6')" > User Entry </button>
+    <button id="7"style="position:absolute; left: 615px; top: 95px;" class="btn btn-primary" onclick="loop('7')" > User Entry Map </button>
+      <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css">
+
+       </div> 
+    </div> 
+  <div>
+    <p8>
+  <label id = "span" for="nRadius" 
+         style="position:relative; left: 302px; top: 3px;" class="range-slider-handle" >
+         The year is: <span id="nRadius-value" style="position:relative; left: 85px; top: -20px">…</span>
+  </label>
+  <input  type="range" min="2011" max="2014" id="nRadius" value='2011' onchange="updateTextInput(this.value);" style="position:relative; left: 430px; top: -40px; width: 207px; text-align: middle" autocomplete='off'>
+<P8>
+  </div>
+      <div id = "entry" style="display:none; position:absolute; left: 0px; top: 157px;  width: 960px;">
+        <p5>
+  <h3>User entry</h3>
+    <label for="fname">First Name</label>
+    <input type="text" id="fname" name="firstname" placeholder="Your name..">
+
+    <label for="lname">Last Name</label>
+    <input type="text" id="lname" name="lastname" placeholder="Your last name..">
+    
+    <label for="years">Year</label>
+    <select id="year" name="HAIs">
+       <option value="2015">2015</option>
+      <option value="2016">2016</option>
+      <option value="2017">2017</option>
+    </select>
+
+    <label for="state">State</label>
+    <select id="states" name="state1">
+      <option value="Hawaii">Hawaii</option>
+      <option value="Alaska">Alaska</option>
+      <option value="Virginia">Virginia</option>
+    </select>
+    
+    <label for="reporting">Health Care Assiociated Infection being Reported</label>
+    <select id="HAI" name="HAIs">
+      <option value="MRSA ">MRSA</option>
+      <option value="C. Difficile ">C. Difficile </option>
+      <option value="CLABSI ">CLABSI</option>
+      <option value="CAUTI  ">CAUTI</option>
+      <option value="SSI  ">SSI</option>
+    </select>
+  
+    <input type="submit" value="Submit" onclick= "output()">
+          </p5>
+<p></p>
+    <p1></p1>
+    <br><br>
+    <p2></p2>
+    <br><br>
+    <p3></p3>
+    <br><br>
+    <p4></p4>
+    <br><br>
+</div>
+ 
+<div id="container" style="position:absolute;"></div>
+<script>
+  
+window.onload = myMain;
+var valuess;
+var globalVariable;
+
+        var fname = document.getElementById("fname");
+    var lname = document.getElementById("lname");
+    var year = document.getElementById("year");
+    var states = document.getElementById("states");
+    var HAI = document.getElementById("HAI");
+    
+    
+var fnames  = [];
+var lnames   = [];
+var years = [];
+var statess   = [];
+var HAIs = [];
+
+function output()
+  {
+     d3.select("#entry").select("p").text("First Name: " +        	
+     (document.getElementById("fname").value));
+    
+    d3.select("#entry").select("p1").text("Last Name: " +        	
+     (document.getElementById("lname").value));
+    
+    d3.select("#entry").select("p2").text("Current Year: " +        	
+     (document.getElementById("year").value));
+    
+    d3.select("#entry").select("p3").text("Reporting State: " +        	
+     (document.getElementById("states").value));
+    
+    d3.select("#entry").select("p4").text("Reporting HAI: " +        	
+     (document.getElementById("HAI").value));
+
+ fnames.push( fname.value );
+ lnames.push( lname.value );
+ years.push( year.value );
+ statess.push( states.value );
+ HAIs.push( HAI.value );
+  
+ clearAndShow();
+
+
+function clearAndShow () {
+  // Clear our fields
+  fname.value = "";
+  lname.value = "";
+  year.value = "";
+  states.value = "";
+  HAI.value = "";
+  
+  
+}
+    sendIt(fnames, lnames, years, statess, HAIs)
+     
+  }
+  
+function sendIt(fnames1,lnames1,years1,statess1,HAIs1)
+  {
+    fnames = fnames1;
+    lnames = lnames1;
+    years = years1;
+    statess = statess1;
+    HAIs = HAIs1;
+    
+  }
+  
+function myMain() {
+  var x = (document.getElementById("clicker").onclick = buton);
+}
+
+function buton(e) {
+  if (e.target.tagName == 'BUTTON') {
+    globalVariable = (e.target.id);
+    barChange();
+  } 
+}
+  
+ document.getElementById("nRadius").style.display = 'none' 
+ document.getElementById("legend1").style.display = 'none'
+ document.getElementById("legend2").style.display = 'none'
+ document.getElementById("legend3").style.display = 'none' 
+ document.getElementById("legend4").style.display = 'none' 
+ document.getElementById("legend5").style.display = 'none' 
+  document.getElementById("span").style.display = 'none' 
+ 
+  function updateTextInput(val) { 
+     valuess = val;
+     barChange();   
+    valuess = 2011;
+   }
+  
+  function barChange() {
+    
+    var localVal = valuess;
+    var localVariable = globalVariable;
+ 
+     d3.select("svg").remove();
+       d3.select("#sidebartext").select("p").text("")
+      .attr("opacity", 0);
+      d3.select("#sidebartext").select("p1").text("")
+      .attr("opacity", 0)
+      d3.select("#sidebartext").select("p2").text("")
+      .attr("opacity", 0)
+      d3.select("#sidebartext").select("p3").text("")
+      .attr("opacity", 0)
+      d3.select("#sidebartext").select("p4").text("")
+      .attr("opacity", 0)
+      d3.select("#sidebartext").select("p5").text("")
+      .attr("opacity", 0)
+       document.getElementById("legend1").style.display = 'none'
+ document.getElementById("legend2").style.display = 'none'
+ document.getElementById("legend3").style.display = 'none' 
+ document.getElementById("legend4").style.display = 'none' 
+ document.getElementById("legend5").style.display = 'none' 
+      if(localVariable == 6)
+      {
+         document.getElementById("legend1").style.display = 'none'
+ document.getElementById("legend2").style.display = 'none'
+ document.getElementById("legend3").style.display = 'none' 
+ document.getElementById("legend4").style.display = 'none' 
+ document.getElementById("legend5").style.display = 'none' 
+  document.getElementById("span").style.display = 'none'
+        document.getElementById("6").style.backgroundColor =     'red';
+        document.getElementById("1").style.backgroundColor =     '';
+        document.getElementById("2").style.backgroundColor =     '';
+        document.getElementById("3").style.backgroundColor =     '';
+        document.getElementById("4").style.backgroundColor =     '';
+        document.getElementById("5").style.backgroundColor =     '';
+        document.getElementById("7").style.backgroundColor =     '';
+         document.getElementById("nRadius").style.display = 'none' 
+         document.getElementById("nRadius-value").style.display = 'none'}
+      if(localVariable == 7)
+      {
+        document.getElementById("span").style.display = 'none'
+         document.getElementById("legend1").style.display = 'none'
+ document.getElementById("legend2").style.display = 'none'
+ document.getElementById("legend3").style.display = 'none' 
+ document.getElementById("legend4").style.display = 'none' 
+ document.getElementById("legend5").style.display = 'none' 
+               document.getElementById("7").style.backgroundColor =     'red';
+        document.getElementById("6").style.backgroundColor =     '';
+        document.getElementById("5").style.backgroundColor =     '';
+        document.getElementById("4").style.backgroundColor =     '';
+        document.getElementById("3").style.backgroundColor =     '';
+        document.getElementById("2").style.backgroundColor =     '';
+        document.getElementById("1").style.backgroundColor =     '';
+         document.getElementById("nRadius").style.display = 'none' 
+         document.getElementById("nRadius-value").style.display = 'none'
+        run();
+      }
+  	if(localVariable == 5)	
+      {
+         document.getElementById("span").style.display = 'block'
+        document.getElementById("legend1").style.display = 'block'
+                document.getElementById("5").style.backgroundColor =     'red';
+        document.getElementById("7").style.backgroundColor =     '';
+        document.getElementById("6").style.backgroundColor =     '';
+        document.getElementById("4").style.backgroundColor =     '';
+        document.getElementById("3").style.backgroundColor =     '';
+        document.getElementById("2").style.backgroundColor =     '';
+        document.getElementById("1").style.backgroundColor =     '';
+        d3.select("svg").remove();
+        Cdiff(2011);
+        
+    if(localVal == 2011 && localVariable == 5)
+          {
+            d3.select("svg").remove();
+            Cdiff(localVal);
+           
+          }
+        if(localVal == 2012 && localVariable == 5)
+          {
+            d3.select("svg").remove();
+             Cdiff(localVal);
+          }
+        if(localVal == 2013 && localVariable == 5)
+          {
+                d3.select("svg").remove();
+             Cdiff(localVal)
+          }
+        if(localVal == 2014 && localVariable == 5)
+          {
+                 d3.select("svg").remove();
+             Cdiff(localVal)
+          }           
+      }
+      	if(localVariable == 4)	
+          
+      { document.getElementById("span").style.display = 'block'
+      document.getElementById("legend3").style.display = 'block'
+                document.getElementById("4").style.backgroundColor =     'red';
+        document.getElementById("7").style.backgroundColor =     '';
+        document.getElementById("6").style.backgroundColor =     '';
+        document.getElementById("5").style.backgroundColor =     '';
+        document.getElementById("3").style.backgroundColor =     '';
+        document.getElementById("2").style.backgroundColor =     '';
+        document.getElementById("1").style.backgroundColor =     '';
+        d3.select("svg").remove();
+        mrsa(2011);
+        
+    if(localVal == 2011 && localVariable == 4)
+          {
+            d3.select("svg").remove(); 
+            mrsa(localVal);
+
+          }
+        if(localVal == 2012 && localVariable == 4)
+          {
+            d3.select("svg").remove(); 
+            mrsa(localVal);
+
+          }
+        if(localVal == 2013 && localVariable == 4)
+          {
+            d3.select("svg").remove(); 
+            mrsa(localVal);
+          }
+        if(localVal == 2014 && localVariable == 4)
+          {
+            d3.select("svg").remove(); 
+            mrsa(localVal);
+          }    
+      }
+      	if(localVariable == 3)	
+          
+      { document.getElementById("span").style.display = 'block'
+      document.getElementById("legend5").style.display = 'block'
+               document.getElementById("3").style.backgroundColor =     'red';
+        document.getElementById("7").style.backgroundColor =     '';
+        document.getElementById("6").style.backgroundColor =     '';
+        document.getElementById("5").style.backgroundColor =     '';
+        document.getElementById("4").style.backgroundColor =     '';
+        document.getElementById("2").style.backgroundColor =     '';
+        document.getElementById("1").style.backgroundColor =     '';
+        d3.select("svg").remove();
+        ssi(2011);
+        
+    if(localVal == 2011 && localVariable == 3)
+          {
+            d3.select("svg").remove();
+            ssi(localVal);
+          }
+        if(localVal == 2012 && localVariable == 3)
+          {
+            d3.select("svg").remove();
+            ssi(localVal);
+          }
+        if(localVal == 2013 && localVariable == 3)
+          {
+            d3.select("svg").remove();
+            ssi(localVal);
+          }
+        if(localVal == 2014 && localVariable == 3)
+          {
+            d3.select("svg").remove();
+            ssi(localVal);
+          }    
+      }
+      	if(localVariable == 2)	
+      { document.getElementById("span").style.display = 'block'
+       document.getElementById("legend4").style.display = 'block'
+               document.getElementById("2").style.backgroundColor =     'red';
+        document.getElementById("7").style.backgroundColor =     '';
+        document.getElementById("6").style.backgroundColor =     '';
+        document.getElementById("5").style.backgroundColor =     '';
+        document.getElementById("4").style.backgroundColor =     '';
+        document.getElementById("3").style.backgroundColor =     '';
+        document.getElementById("1").style.backgroundColor =     '';
+        d3.select("svg").remove();
+        cauti(2011);
+        
+    if(localVal == 2011 && localVariable == 2)
+          {
+            d3.select("svg").remove(); 
+            cauti(localVal);
+          }
+        if(localVal == 2012 && localVariable == 2)
+          {
+            d3.select("svg").remove(); 
+            cauti(localVal);
+          }
+        if(localVal == 2013 && localVariable == 2)
+          {
+             d3.select("svg").remove(); 
+            cauti(localVal);
+          }
+        if(localVal == 2014 && localVariable == 2)
+          {
+             d3.select("svg").remove(); 
+            cauti(localVal);
+          }    
+      }
+      	if(localVariable == 1)	
+      { document.getElementById("span").style.display = 'block'
+                document.getElementById("1").style.backgroundColor =     'red';
+        document.getElementById("7").style.backgroundColor =     '';
+        document.getElementById("6").style.backgroundColor =     '';
+        document.getElementById("5").style.backgroundColor =     '';
+        document.getElementById("4").style.backgroundColor =     '';
+        document.getElementById("3").style.backgroundColor =     '';
+        document.getElementById("2").style.backgroundColor =     '';
+       document.getElementById("legend2").style.display = 'block'
+        d3.select("svg").remove();
+        claubi(2011);
+        
+    if(localVal == 2011 && localVariable == 1)
+          {
+            d3.select("svg").remove(); 
+            claubi(localVal);
+          }
+        if(localVal == 2012 && localVariable == 1)
+          {
+           d3.select("svg").remove(); 
+            claubi(localVal);
+          }
+        if(localVal == 2013 && localVariable == 1)
+          {
+           d3.select("svg").remove(); 
+            claubi(localVal);
+          }
+        if(localVal == 2014 && localVariable == 1)
+          {
+            d3.select("svg").remove(); 
+            claubi(localVal);
+          }    
+      }          
+  }
+  
+
+function loop(data){
+
+ d3.select("svg").remove();
+      d3.select("svgContainer").remove(); 
+          d3.select("#sidebartext").select("p").text("")
+      .attr("opacity", 0)
+      d3.select("#sidebartext").select("p1").text("")
+      .attr("opacity", 0)
+      d3.select("#sidebartext").select("p2").text("")
+      .attr("opacity", 0)
+      d3.select("#sidebartext").select("p3").text("")
+      .attr("opacity", 0)
+      d3.select("#sidebartext").select("p4").text("")
+      .attr("opacity", 0)
+      d3.select("#sidebartext").select("p5").text("")
+      .attr("opacity", 0)
+       var x = document.getElementById('entry');
+  document.getElementById("nRadius").style.display = 'block' 
+     
+  if(data == 6)
+      {
+        x.style.display = 'block';
+      }
+  else
+    {
+      x.style.display = 'none';
+    }
+   if(data == 7)
+      {
+        run()
+      }
+  if(data == 5)
+    {
+      d3.select("svg").remove();
+      d3.select("svgContainer").remove(); 
+      d3.select("#nRadius").on("input", function() {
+  update(this.value);
+});
+
+// Initial starting radius of the circle 
+update(2011);
+  
+  function update(nRadius) {
+
+  // adjust the text on the range slider
+  var x = d3.select("#nRadius-value").text(nRadius);
+  var y = d3.select("#nRadius").property("value", nRadius);
+}
+       
+    }
+   if(data == 4)
+    {
+      d3.select("svg").remove();
+      d3.select("svgContainer").remove();
+              d3.select("#nRadius").on("input", function() {
+  update(+this.value);
+});
+
+// Initial starting radius of the circle 
+update(2011);
+  
+  function update(nRadius) {
+
+  // adjust the text on the range slider
+  d3.select("#nRadius-value").text(nRadius);
+  d3.select("#nRadius").property("value", nRadius);
+}
+    }
+  if(data == 3)
+    {
+      d3.select("svg").remove(); 
+      d3.select("svgContainer").remove();
+              d3.select("#nRadius").on("input", function() {
+  update(+this.value);
+});
+
+// Initial starting radius of the circle 
+update(2011);
+  
+  function update(nRadius) {
+
+  // adjust the text on the range slider
+  d3.select("#nRadius-value").text(nRadius);
+  d3.select("#nRadius").property("value", nRadius);
+}
+    }
+  if(data == 2)
+    {
+      d3.select("svg").remove(); 
+      d3.select("svgContainer").remove();
+              d3.select("#nRadius").on("input", function() {
+  update(+this.value);
+});
+
+// Initial starting radius of the circle 
+update(2011);
+  
+  function update(nRadius) {
+
+  // adjust the text on the range slider
+  d3.select("#nRadius-value").text(nRadius);
+  d3.select("#nRadius").property("value", nRadius);
+}
+    }
+  if(data == 1)
+    {
+      d3.select("svg").remove(); 
+      d3.select("svgContainer").remove();
+              d3.select("#nRadius").on("input", function() {
+  update(+this.value);
+});
+
+// Initial starting radius of the circle 
+update(2011);
+  
+  function update(nRadius) {
+
+  // adjust the text on the range slider
+  d3.select("#nRadius-value").text(nRadius);
+  d3.select("#nRadius").property("value", nRadius);
+}
+    }
+  if(data == 6)
+    {
+       document.getElementById("nRadius").style.display = 'none' 
+       document.getElementById("nRadius-value").style.display = 'none' 
+       
+    }
+  else
+    {
+         document.getElementById("nRadius").style.display = 'block' 
+       document.getElementById("nRadius-value").style.display = 'block' 
+    }
+}
+document.getElementById("nRadius-value").style.display = 'none'
+  var flag = true;
+var hits = {};
+var parade = window.histograms.states;
+for (var i = 0 ; i<parade.length ; i++)
+    hits[parade[i].name] = parade[i].hits;
+
+var width = 960,
+    height = 600,
+    centered;
+
+var projection = d3.geo.albersUsa()
+    .scale(width)
+    .translate([0, 0]);
+
+var path = d3.geo.path()
+    .projection(projection);
+
+var svg1 = d3.select("body").append("svg")
+    .attr("width", width)
+    .attr("height", height);
+  
+svg1.append("rect")
+    .attr("class", "background")
+    .attr("width", width)
+    .attr("height", height)
+    .on("click", click);
+
+var g = svg1.append("g")
+    .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")")
+  .append("g")
+    .attr("id", "states");
+
+d3.json("states.json", function(json) {
+  var heatmap = d3.scale.linear()
+ 
+  var states = g.selectAll("path")
+    .data(json.features)
+    .enter().append("path")
+    .attr("d", path)
+    .attr("j", function(d) { return d.properties.abbr; })
+    .style("fill","#b2c8c6") //changes default map color
+    .on("click", click)
+
+    
+  var labels = g.selectAll("text")
+    .data(json.features)
+    .enter().append("text")
+    .attr("transform", function(d) { return "translate(" + path.centroid(d) + ")"; })
+    .attr("id", function(d) { return 'label-'+d.properties.name; })
+    .attr("dy", ".35em")
+    .on("click", click)
+    .text(function(d) { return d.properties.name; });
+ 
+});
+  ///////////////////////
+  var sidebar = svg1.append("rect")
+  	.classed("sidebar", true)
+    .attr("width", width/3)
+    .attr("height", height)
+		.attr("x", function () { return width})
+		.attr("y", 0)
+  	.attr("fill", "#96cdcd")
+
+      
+  function wrap(text, width) {
+    text.each(function() {
+        var text = d3.select(this),
+        words = text.text().split(/\*+/).reverse(),
+        word,
+        line = [],
+        lineNumber = 0,
+        lineHeight = 4, // ems
+        y = text.attr("y"),
+        dy = parseFloat(text.attr("dy")),
+        tspan = text.text(null).append("tspan").attr("x", 0).attr("y", y).attr("dy", dy + "em");
+        while (word = words.pop()) {
+            line.push(word);
+            tspan.text(line.join(" "));
+            if (tspan.node().getComputedTextLength() > width) {
+                line.pop();
+                tspan.text(line.join(" "));
+                line = [word];
+                tspan = text.append("tspan").attr("x", 0).attr("y", -25).attr("dy", ++lineNumber * lineHeight + dy + "em").text(word);
+            }
+        }
+    })}
+
+function click(d) {
+  flag=!flag
+  if(!flag)
+  {
+    sbt = d3.select("#sidebartext");
+    sbt.attr("opacity", 1);
+		sbt.select("p").text(function(e) { return "2014 Reported MRSA HAIs: " + d.properties.mrsa2014});
+     sbt.select("p1").text(function(e) { return "2014 Reported C. Difficile HAIs: " + d.properties.cdiff2014}); 
+    sbt.select("p2").text(function(e) { return "2014 Reported CLABSI HAIs: " + d.properties.calbsi2014});
+    sbt.select("p3").text(function(e) { return "2014 Reported CAUTI HAIs: " + d.properties.cauti2014});
+    sbt.select("p4").text(function(e) { return "2014 Reported CLABSI SSI: " + d.properties.ssi2014});
+    sbt.select("p5").text(function(e) { return "2014 Antibiotics prescribed per 1,000: " + d.properties.antibio});
+    d3.select(".sidebar")
+    .transition()
+    .duration(0)
+  	.attr("opacity", 0.75)
+    .attr("x", width - (width/3));
+  var x = 0,
+      y = 0,
+      k = 1;
+  }
+  else
+  {
+     sbt.select("p").text(function(e) { return "2014 Reported MRSA HAIs: " + d.properties.mrsa2014});
+     sbt.select("p1").text(function(e) { return "2014 Reported C. Difficile HAIs: " + d.properties.cdiff2014}); 
+    sbt.select("p2").text(function(e) { return "2014 Reported CLABSI HAIs: " + d.properties.calbsi2014});
+    sbt.select("p3").text(function(e) { return "2014 Reported CAUTI HAIs: " + d.properties.cauti2014});
+    sbt.select("p4").text(function(e) { return "2014 Reported CLABSI SSI: " + d.properties.ssi2014});
+    sbt.select("p5").text(function(e) { return "2014 Antibiotics prescribed per 1,000: " + d.properties.antibio});
+    flag=true
+    if (d && centered == d)
+    {
+      d3.select("#sidebartext").select("p").text("")
+      .attr("opacity", 0);
+      d3.select("#sidebartext").select("p1").text("")
+      .attr("opacity", 0)
+      d3.select("#sidebartext").select("p2").text("")
+      .attr("opacity", 0)
+      d3.select("#sidebartext").select("p3").text("")
+      .attr("opacity", 0)
+      d3.select("#sidebartext").select("p4").text("")
+      .attr("opacity", 0)
+      d3.select("#sidebartext").select("p5").text("")
+      .attr("opacity", 0)
+    	d3.select(".sidebar")
+    	.transition()
+    	.duration(0)
+  		.attr("opacity", 1)
+    	.attr("x", width + (width/3));
+ 		 }
+     else
+     {
+      flag = false  
+     }
+    	var x = 0,
+      y = 0,
+      k = 1;
+  }
+
+
+  if (d && centered !== d) {
+    var centroid = path.centroid(d);
+    	x = -centroid[0];
+   	  y = -centroid[1];
+      k = 4.5;
+    centered = d;
+ 			} else {
+    		centered = null;
+  		}
+
+  g.selectAll("path")
+      .classed("active", centered && function(d) { return d === centered; });
+  g.selectAll("text")
+      .text(function(d) { return d.properties.abbr; })
+      .classed("active",false);
+  g.selectAll("text")
+      .text(function(d) { return d.properties.name})
+      .classed("active", centered && function(d) { return d === centered; })
+      .call(wrap, 0)
+  		.style('fill')
+  g.transition()
+      .duration(500)
+      .attr("transform", "scale(" + k + ")translate(" + x + "," + y + ")translate(-35,0)")
+      .style("stroke-width", 0.75 / k + "px");
+}
+  
+function run()
+  {
+
+var flag = true;
+var hits = {};
+var parade = window.histograms.states;
+for (var i = 0 ; i<parade.length ; i++)
+    hits[parade[i].name] = parade[i].hits;
+
+var width = 960,
+    height = 600,
+    centered;
+
+var projection = d3.geo.albersUsa()
+    .scale(width)
+    .translate([0, 0]);
+
+var path = d3.geo.path()
+    .projection(projection);
+   
+
+var svg1 = d3.select("#container").append("svg")
+    .attr("width", width)
+    .attr("height", height);
+  
+svg1.append("rect")
+    .attr("class", "background")
+    .attr("width", width)
+    .attr("height", height)
+    .on("click", click)
+.style("fill", "#97abcd");
+    
+    
+var text = "";
+var i = 0;
+var fnameslength = fnames.length;
+var lnameslength = lnames.length;
+var yearslength = years.length;
+var stateslength = statess.length;
+var hailength = HAIs.length;
+    
+var g = svg1.append("g")
+    .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")")
+  .append("g")
+    .attr("id", "states");
+
+d3.json("states.json", function(json) {
+  var heatmap = d3.scale.linear()
+ 
+  var states = g.selectAll("path")
+    .data(json.features)
+    .enter().append("path")
+    .attr("d", path)
+    .attr("j", function(d) { return d.properties.abbr; })
+    .style("fill","#799e7d") //changes default map color
+    .on('click', click)
+
+    
+  var labels = g.selectAll("text")
+    .data(json.features)
+    .enter().append("text")
+    .attr("transform", function(d) { return "translate(" + path.centroid(d) + ")"; })
+    .attr("dy", ".35em")
+    .text(function(d) { return d.properties.name; });
+  
+ 
+});
+    
+    var hover_tooltip;
+
+    var t = function (data) {
+        var obj = {};
+        obj.header = "";
+        obj.body=data.p;
+        hover_tooltip = tooltip.plain()
+            .width(180)
+            .show_closer(false)
+            .call (this, obj);
+    };
+    
+    var counter = -1;
+    var counter1 = -1;
+    var counter2 = -1;
+    var circle;
+   for(var x = 0; x < yearslength; x++)
+      {
+        
+          if(statess[x] == '')
+      {
+        circle  = svg1.append("circle")
+                         .attr("cx", -15)
+                          .attr("cy", -48)
+                        .attr("r", 0);
+      }
+          if(statess[x] != '')
+      {
+        
+        if(fnames[x] == '' || lnames[x] == '' || years[x] == ''             || HAIs[x] == '' )
+          {
+            circle= svg1.append("circle")
+                         .attr("cx", -15)
+                          .attr("cy", -48)
+                        .attr("r", 0);
+          }
+        else
+          {       
+            if(statess[x] == 'Alaska' && counter <= 3)
+              {
+               // function(d){return Math.floor(Math.random() * (max - min + 1)) + min;}
+                circle = svg1.append("circle")
+                .classed("circle", true)
+                         .attr("cx", function(d){return Math.floor(Math.random() * (210 - 190 + 1)) + 190;})
+                          .attr("cy", function(d){return Math.floor(Math.random() * (470 - 430 + 1)) + 430;})
+                        .attr("r", 4)
+                .datum({p: "Name: " + fnames[x] + " " + lnames[x] + "<br/>" + "Year: " + years[x] +  "<br/>" + "HAI being reported: " + HAIs[x] })
+     .on("mouseover", t)
+                .style("fill","black")
+                  .on("mouseover", t)
+        .on("mouseout", function () {
+            hover_tooltip.close();
+        })
+                counter++;
+              }
+             if(statess[x] == 'Virginia' && counter1 <= 3) 
+               {
+  
+  circle = svg1.append("circle")
+  .classed("circle", true)
+                         .attr("cx", function(d){return Math.floor(Math.random() * (740 - 700 + 1)) + 700;})
+                          .attr("cy", function(d){return Math.floor(Math.random() * (320 - 290 + 1)) + 280;})
+                        .attr("r", 4)
+                .style("fill","black")
+  .datum({p: "Name: " + fnames[x] + " " + lnames[x] + "<br/>" + "Year: " + years[x] +  "<br/>" + "HAI being reported: " + HAIs[x] })
+     .on("mouseover", t)
+        .on("mouseout", function () {
+            hover_tooltip.close();
+        })
+  
+               }
+             if(statess[x] == 'Hawaii' && counter2 <= 3) 
+               {
+ circle =  svg1.append("circle")
+ .classed("circle", true)
+                         .attr("cx",function(d){return Math.floor(Math.random() * (360 - 350 + 1)) + 350;})
+                          .attr("cy", function(d){return Math.floor(Math.random() * (510 - 490 + 1)) + 490;})
+                        .attr("r", 4)
+ .datum({p: "Name: " + fnames[x] + " " + lnames[x] + "<br/>" + "Year: " + years[x] +  "<br/>" + "HAI being reported: " + HAIs[x] })
+     .on("mouseover", t)
+                .style("fill","black")
+   .on("mouseover", t)
+        .on("mouseout", function () {
+            hover_tooltip.close();
+        });
+                 counter2++;
+               }
+          }                       
+      }
+      }
+  ///////////////////////
+
+      
+  function wrap(text, width) {
+    text.each(function() {
+        var text = d3.select(this),
+        words = text.text().split(/\*+/).reverse(),
+        word,
+        line = [],
+        lineNumber = 0,
+        lineHeight = 4, // ems
+        y = text.attr("y"),
+        dy = parseFloat(text.attr("dy")),
+        tspan = text.text(null).append("tspan").attr("x", 0).attr("y", y).attr("dy", dy + "em");
+        while (word = words.pop()) {
+            line.push(word);
+            tspan.text(line.join(" "));
+            if (tspan.node().getComputedTextLength() > width) {
+                line.pop();
+                tspan.text(line.join(" "));
+                line = [word];
+                tspan = text.append("tspan").attr("x", 0).attr("y", -25).attr("dy", ++lineNumber * lineHeight + dy + "em").text(word);
+            }
+        }
+    })}
+
+
+  }
+  
+  
+function Cdiff(year){
+var flag = true;
+var hits = {};
+var parade = window.histograms.states;
+for (var i = 0 ; i<parade.length ; i++)
+    hits[parade[i].name] = parade[i].hits;
+
+var width = 960,
+    height = 600,
+    centered;
+
+  
+var projection = d3.geo.albersUsa()
+    .scale(width)
+    .translate([0, 0]);
+
+var path = d3.geo.path()
+    .projection(projection);
+
+var svg = d3.select("body").append("svg")
+    .attr("width", width)
+    .attr("height", height);
+
+  // create a text wrapping function
+  
+svg.append("rect")
+    .attr("class", "background")
+    .attr("width", width)
+    .attr("height", height)
+    .on("click", click);
+    
+//Create the Scale we will use for the Axis
+ var axisScale = d3.scale.linear()
+                          .domain([0, 11000])
+                          .range([20, 640])
+
+//Create the Axis
+var xAxis = d3.svg.axis()
+                   .scale(axisScale)
+
+//Create an SVG group Element for the Axis elements and call the xAxis function
+var xAxisGroup = svg.append("g")
+                              .call(xAxis)
+.attr("transform", "translate(" + 0 + "," + 570 + ")").style("fill",'white');
+    
+var g = svg.append("g")
+    .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")")
+  .append("g")
+    .attr("id", "states");
+
+d3.json("states.json", function(json) {
+  var heatmap = d3.scale.linear()
+    .domain([0,d3.max(json.features, function(d) { return Math.log(hits[d.properties.abbr] || 1); })])
+    .interpolate(d3.interpolateRgb)
+    .range(["#d6ddfe","#0123d0"])
+  
+  var states = g.selectAll("path")
+    .data(json.features)
+    .enter().append("path")
+    .attr("d", path)
+    .attr("id", function(d) { return d.properties.abbr; })
+    .style("fill", function(d) {
+      if(year == 2011)
+        {
+      return heatmap(Math.log(d.properties.cdiff2011 || 1))}
+      if(year == 2012)
+        {
+      return heatmap(Math.log(d.properties.cdiff2012 || 1))}
+      if(year == 2013)
+        {
+      return heatmap(Math.log(d.properties.cdiff2013 || 1))}
+      if(year == 2014)
+        {
+      return heatmap(Math.log(d.properties.cdiff2014 || 1))}
+       })
+  
+    .on("click", click)
+  
+var gradient = svg.append("svg")
+  .append("linearGradient")
+.classed("gradient", true)
+    .attr("id", "gradient")
+    .attr("x1", "-16%")
+    .attr("y1", "100%")
+    .attr("x2", "100%")
+    .attr("y2", "100%")
+    .attr("spreadMethod", "pad")
+
+
+gradient.append("stop")
+    .attr("offset", "0%")
+    .attr("stop-color", "white")
+    .attr("stop-opacity", 1.64);
+
+gradient.append("stop")
+    .attr("offset", "75%")
+    .attr("stop-color", "blue")
+    .attr("stop-opacity", 1);
+
+var threshold_scale = svg.selectAll("body")
+  	.data(json.features)
+    .enter().append("rect")
+  	.attr("width", 620)
+  	.attr("height", 22)
+  	.attr("x", 20)
+  	.attr("y",550)
+    .style("fill", "url(#gradient)")
+    .attr("opacity", 1)
+  
+  var labels = g.selectAll("text")
+    .data(json.features)
+    .enter().append("text")
+    .attr("transform", function(d) { return "translate(" + path.centroid(d) + ")"; })
+    .attr("id", function(d) { return 'label-'+d.properties.abbr; })
+    .attr("dy", ".35em")
+    .on("click", click)
+    .text(function(d) { return d.properties.abbr; });
+});
+  ///////////////////////
+  var sidebar = svg.append("rect")
+  	.classed("sidebar", true)
+    .attr("width", width/3)
+    .attr("height", height)
+		.attr("x", function () { return width})
+		.attr("y", 0)
+  	.attr("fill", "#96cdcd")
+
+      
+  function wrap(text, width) {
+    text.each(function() {
+        var text = d3.select(this),
+        words = text.text().split(/\*+/).reverse(),
+        word,
+        line = [],
+        lineNumber = 0,
+        lineHeight = 4, // ems
+        y = text.attr("y"),
+        dy = parseFloat(text.attr("dy")),
+        tspan = text.text(null).append("tspan").attr("x", 0).attr("y", y).attr("dy", dy + "em");
+        while (word = words.pop()) {
+            line.push(word);
+            tspan.text(line.join(" "));
+            if (tspan.node().getComputedTextLength() > width) {
+                line.pop();
+                tspan.text(line.join(" "));
+                line = [word];
+                tspan = text.append("tspan").attr("x", 0).attr("y", -25).attr("dy", ++lineNumber * lineHeight + dy + "em").text(word);
+            }
+        }
+    })}
+
+function click(d) {
+  flag=!flag
+  if(!flag)
+  {
+    sbt = d3.select("#sidebartext");
+    sbt.attr("opacity", 1);
+    sbt.select("p").text(function(e) { return "2014 Reported C.difficile HAIs: " + d.properties.cdiff2014});
+    sbt.select("p1").text(function(e) { return "2013 Reported C.difficile HAIs: " + d.properties.cdiff2013});
+    sbt.select("p2").text(function(e) { return "2013 Reported C.difficile HAIs: " + d.properties.cdiff2012});
+    sbt.select("p3").text(function(e) { return "2011 Reported C.difficile HAIs: " + d.properties.cdiff2011});
+    d3.select(".sidebar")
+    .transition()
+    .duration(0)
+  	.attr("opacity", 0.75)
+    .attr("x", width - (width/3));
+    d3.select(".sidebar")
+  var x = 0,
+      y = 0,
+      k = 1;
+  }
+  else
+  {
+    sbt.select("p").text(function(e) { return "2014 Reported C.difficile HAIs: " + d.properties.cdiff2014});
+    sbt.select("p1").text(function(e) { return "2013 Reported C.difficile HAIs: " + d.properties.cdiff2013});
+    sbt.select("p2").text(function(e) { return "2013 Reported C.difficile HAIs: " + d.properties.cdiff2012});
+    sbt.select("p3").text(function(e) { return "2011 Reported C.difficile HAIs: " + d.properties.cdiff2011});
+
+    flag=true
+    if (d && centered == d)
+    {
+      d3.select("#sidebartext").select("p").text("")
+      .attr("opacity", 0);
+      d3.select("#sidebartext").select("p1").text("")
+      .attr("opacity", 0)
+      d3.select("#sidebartext").select("p2").text("")
+      .attr("opacity", 0)
+      d3.select("#sidebartext").select("p3").text("")
+      .attr("opacity", 0)
+      d3.select("#sidebartext").select("p4").text("")
+      .attr("opacity", 0)
+      d3.select("#sidebartext").select("p5").text("")
+      .attr("opacity", 0)
+    	d3.select(".sidebar")
+    	.transition()
+    	.duration(0)
+  		.attr("opacity", 0.75)
+    	.attr("x", width + (width/3));
+      
+ 		 }
+     else
+     {
+      flag = false  
+     }
+    	var x = 0,
+      y = 0,
+      k = 1;
+  }
+
+
+  if (d && centered !== d) {
+    var centroid = path.centroid(d);
+    	x = -centroid[0];
+   	  y = -centroid[1];
+      k = 4.5;
+    centered = d;
+ 			} else {
+    		centered = null;
+  		}
+
+  g.selectAll("path")
+      .classed("active", centered && function(d) { return d === centered; });
+  g.selectAll("text")
+      .text(function(d) { return d.properties.abbr; })
+      .classed("active",false);
+  g.selectAll("text")
+      .text(function(d) { return d.properties.name})
+      .classed("active", centered && function(d) { return d === centered; })
+      .call(wrap, 0)
+  		.style('fill')
+  g.transition()
+      .duration(500)
+      .attr("transform", "scale(" + k + ")translate(" + x + "," + y + ")translate(-35,0)")
+      .style("stroke-width", 0.75 / k + "px");
+}
+  
+  }
+  
+    function mrsa(year){
+var flag = true;
+var hits = {};
+var parade = window.histograms.states;
+for (var i = 0 ; i<parade.length ; i++)
+    hits[parade[i].name] = parade[i].hits;
+
+var width = 960,
+    height = 600,
+    centered;
+
+  
+var projection = d3.geo.albersUsa()
+    .scale(width)
+    .translate([0, 0]);
+
+var path = d3.geo.path()
+    .projection(projection);
+
+var svg = d3.select("body").append("svg")
+    .attr("width", width)
+    .attr("height", height);
+
+  // create a text wrapping function
+  
+svg.append("rect")
+    .attr("class", "background")
+    .attr("width", width)
+    .attr("height", height)
+    .on("click", click);
+
+    
+//Create the Scale we will use for the Axis
+ var axisScale = d3.scale.linear()
+                          .domain([0, 850])
+                          .range([55, 600]);
+
+//Create the Axis
+var xAxis = d3.svg.axis()
+                   .scale(axisScale);
+
+
+//Create an SVG group Element for the Axis elements and call the xAxis function
+var xAxisGroup = svg.append("g")
+                              .call(xAxis)
+.attr("transform", "translate(" + -35 + "," + 570 + ")").style("fill",'white');
+    
+var g = svg.append("g")
+    .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")")
+  .append("g")
+    .attr("id", "states");
+
+d3.json("states.json", function(json) {
+  var heatmap = d3.scale.linear()
+    .domain([0,d3.max(json.features, function(d) { return Math.log(hits[d.properties.abbr] || 1); })])
+    .interpolate(d3.interpolateRgb)
+    .range(["#fee5ec","brown"])
+  
+  var states = g.selectAll("path")
+    .data(json.features)
+    .enter().append("path")
+    .attr("d", path)
+    .attr("id", function(d) { return d.properties.abbr; })
+    .style("fill", function(d) {
+      if(year == 2011)
+        {
+      return heatmap(Math.log(d.properties.mrsa2011 || 1))}
+      if(year == 2012)
+        {
+      return heatmap(Math.log(d.properties.mrsa2012 || 1))}
+      if(year == 2013)
+        {
+      return heatmap(Math.log(d.properties.mrsa2013 || 1))}
+      if(year == 2014)
+        {
+      return heatmap(Math.log(d.properties.mrsa2014 || 1))}
+       })
+    .on("click", click)
+  
+var gradient = svg.append("defs")
+  .append("linearGradient")
+.classed("gradient", true)
+    .attr("id", "gradient")
+    .attr("x1", "-16%")
+    .attr("y1", "100%")
+    .attr("x2", "100%")
+    .attr("y2", "100%")
+    .attr("spreadMethod", "pad");
+
+gradient.append("stop")
+    .attr("offset", "0%")
+    .attr("stop-color", "white")
+    .attr("stop-opacity", 1.64);
+
+gradient.append("stop")
+    .attr("offset", "60%")
+    .attr("stop-color", "brown")
+    .attr("stop-opacity", 1);
+
+var threshold_scale = svg.selectAll("body")
+  	.data(json.features)
+    .enter().append("rect")
+  	.attr("width", 545)
+  	.attr("height", 22)
+  	.attr("x", 20)
+  	.attr("y",550)
+    .style("fill", "url(#gradient)");
+    
+  var labels = g.selectAll("text")
+    .data(json.features)
+    .enter().append("text")
+    .attr("transform", function(d) { return "translate(" + path.centroid(d) + ")"; })
+    .attr("id", function(d) { return 'label-'+d.properties.abbr; })
+    .attr("dy", ".35em")
+    .on("click", click)
+    .text(function(d) { return d.properties.abbr; });
+});
+  ///////////////////////
+  var sidebar = svg.append("rect")
+  	.classed("sidebar", true)
+    .attr("width", width/3)
+    .attr("height", height)
+		.attr("x", function () { return width})
+		.attr("y", 0)
+  	.attr("fill", "	#96cdcd")
+
+      
+  function wrap(text, width) {
+    text.each(function() {
+        var text = d3.select(this),
+        words = text.text().split(/\*+/).reverse(),
+        word,
+        line = [],
+        lineNumber = 0,
+        lineHeight = 4, // ems
+        y = text.attr("y"),
+        dy = parseFloat(text.attr("dy")),
+        tspan = text.text(null).append("tspan").attr("x", 0).attr("y", y).attr("dy", dy + "em");
+        while (word = words.pop()) {
+            line.push(word);
+            tspan.text(line.join(" "));
+            if (tspan.node().getComputedTextLength() > width) {
+                line.pop();
+                tspan.text(line.join(" "));
+                line = [word];
+                tspan = text.append("tspan").attr("x", 0).attr("y", -25).attr("dy", ++lineNumber * lineHeight + dy + "em").text(word);
+            }
+        }
+    })}
+
+function click(d) {
+  flag=!flag
+  if(!flag)
+  {
+   sbt = d3.select("#sidebartext");
+    sbt.attr("opacity", 1);
+    sbt.select("p").text(function(e) { return "2014 Reported MRSA HAIs: " + d.properties.mrsa2014});
+    sbt.select("p1").text(function(e) { return "2013 Reported MRSA HAIs: " + d.properties.mrsa2013}); 
+    sbt.select("p2").text(function(e) { return "2012 Reported MRSA HAIs: " + d.properties.mrsa2012});
+    sbt.select("p3").text(function(e) { return "2011 Reported MRSA HAIs: " + d.properties.mrsa2011});
+    d3.select(".sidebar")
+    .transition()
+    .duration(0)
+  	.attr("opacity", 0.75)
+    .attr("x", width - (width/3));
+  var x = 0,
+      y = 0,
+      k = 1;
+  }
+  else
+  {
+ sbt.select("p").text(function(e) { return "2014 Reported MRSA HAIs: " + d.properties.mrsa2014});
+    sbt.select("p1").text(function(e) { return "2013 Reported MRSA HAIs: " + d.properties.mrsa2013}); 
+    sbt.select("p2").text(function(e) { return "2012 Reported MRSA HAIs: " + d.properties.mrsa2012});
+    sbt.select("p3").text(function(e) { return "2011 Reported MRSA HAIs: " + d.properties.mrsa2011});
+    flag=true
+    if (d && centered == d)
+    {
+      d3.select("#sidebartext").select("p").text("")
+      .attr("opacity", 0);
+      d3.select("#sidebartext").select("p1").text("")
+      .attr("opacity", 0)
+      d3.select("#sidebartext").select("p2").text("")
+      .attr("opacity", 0)
+      d3.select("#sidebartext").select("p3").text("")
+      .attr("opacity", 0)
+      d3.select("#sidebartext").select("p4").text("")
+      .attr("opacity", 0)
+      d3.select("#sidebartext").select("p5").text("")
+      .attr("opacity", 0)
+    	d3.select(".sidebar")
+    	.transition()
+    	.duration(0)
+  		.attr("opacity", 0.75)
+    	.attr("x", width + (width/3));
+ 		 }
+     else
+     {
+      flag = false  
+     }
+    	var x = 0,
+      y = 0,
+      k = 1;
+  }
+
+
+  if (d && centered !== d) {
+    var centroid = path.centroid(d);
+    	x = -centroid[0];
+   	  y = -centroid[1];
+      k = 4.5;
+    centered = d;
+ 			} else {
+    		centered = null;
+  		}
+
+  g.selectAll("path")
+      .classed("active", centered && function(d) { return d === centered; });
+  g.selectAll("text")
+      .text(function(d) { return d.properties.abbr; })
+      .classed("active",false);
+  g.selectAll("text")
+      .text(function(d) { return d.properties.name})
+      .classed("active", centered && function(d) { return d === centered; })
+      .call(wrap, 0)
+  		.style('fill')
+  g.transition()
+      .duration(500)
+      .attr("transform", "scale(" + k + ")translate(" + x + "," + y + ")translate(-35,0)")
+      .style("stroke-width", 0.75 / k + "px");
+}
+  
+  }
+</script>
+ 
+<script>
+function claubi(year){
+var flag = true;
+var hits = {};
+var parade = window.histograms.states;
+for (var i = 0 ; i<parade.length ; i++)
+    hits[parade[i].name] = parade[i].hits;
+
+var width = 960,
+    height = 600,
+    centered;
+
+  
+var projection = d3.geo.albersUsa()
+    .scale(width)
+    .translate([0, 0]);
+
+var path = d3.geo.path()
+    .projection(projection);
+
+var svg = d3.select("body").append("svg")
+    .attr("width", width)
+    .attr("height", height);
+
+  // create a text wrapping function
+  
+svg.append("rect")
+    .attr("class", "background")
+    .attr("width", width)
+    .attr("height", height)
+    .on("click", click);
+
+    
+//Create the Scale we will use for the Axis
+ var axisScale = d3.scale.linear()
+                          .domain([0, 3000])
+                          .range([55, 600]);
+
+//Create the Axis
+var xAxis = d3.svg.axis()
+                   .scale(axisScale);
+
+
+//Create an SVG group Element for the Axis elements and call the xAxis function
+var xAxisGroup = svg.append("g")
+                              .call(xAxis)
+.attr("transform", "translate(" + -30+ "," + 570 + ")").style("fill",'white');
+    
+var g = svg.append("g")
+    .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")")
+  .append("g")
+    .attr("id", "states");
+
+d3.json("states.json", function(json) {
+  var heatmap = d3.scale.linear()
+    .domain([0,d3.max(json.features, function(d) { return Math.log(hits[d.properties.abbr] || 1); })])
+    .interpolate(d3.interpolateRgb)
+    .range(["#fef4c2","orange"])
+  
+  var states = g.selectAll("path")
+    .data(json.features)
+    .enter().append("path")
+    .attr("d", path)
+    .attr("id", function(d) { return d.properties.abbr; })
+    .style("fill", function(d) {
+      if(year == 2011)
+        {
+      return heatmap(Math.log(d.properties.clabsi2011|| 1))}
+      if(year == 2012)
+        {
+      return heatmap(Math.log(d.properties.clasbi2012 || 1))}
+      if(year == 2013)
+        {
+      return heatmap(Math.log(d.properties.clasbi2013 || 1))}
+      if(year == 2014)
+        {
+      return heatmap(Math.log(d.properties.calbsi2014 || 1))}
+       })
+    .on("click", click)
+  
+var gradient = svg.append("defs")
+  .append("linearGradient")
+.classed("gradient", true)
+    .attr("id", "gradient")
+    .attr("x1", "-16%")
+    .attr("y1", "100%")
+    .attr("x2", "100%")
+    .attr("y2", "100%")
+    .attr("spreadMethod", "pad");
+
+gradient.append("stop")
+    .attr("offset", "0%")
+    .attr("stop-color", "white")
+    .attr("stop-opacity", 1.64);
+
+gradient.append("stop")
+    .attr("offset", "60%")
+    .attr("stop-color", "orange")
+    .attr("stop-opacity", 1);
+
+var threshold_scale = svg.selectAll("body")
+  	.data(json.features)
+    .enter().append("rect")
+  	.attr("width", 545)
+  	.attr("height", 22)
+  	  	.attr("x", 25)
+  	.attr("y",550)
+    .style("fill", "url(#gradient)");
+    
+  var labels = g.selectAll("text")
+    .data(json.features)
+    .enter().append("text")
+    .attr("transform", function(d) { return "translate(" + path.centroid(d) + ")"; })
+    .attr("id", function(d) { return 'label-'+d.properties.abbr; })
+    .attr("dy", ".35em")
+    .on("click", click)
+    .text(function(d) { return d.properties.abbr; });
+});
+  ///////////////////////
+  var sidebar = svg.append("rect")
+  	.classed("sidebar", true)
+    .attr("width", width/3)
+    .attr("height", height)
+		.attr("x", function () { return width})
+		.attr("y", 0)
+  	.attr("fill", "	#96cdcd")
+
+      
+  function wrap(text, width) {
+    text.each(function() {
+        var text = d3.select(this),
+        words = text.text().split(/\*+/).reverse(),
+        word,
+        line = [],
+        lineNumber = 0,
+        lineHeight = 4, // ems
+        y = text.attr("y"),
+        dy = parseFloat(text.attr("dy")),
+        tspan = text.text(null).append("tspan").attr("x", 0).attr("y", y).attr("dy", dy + "em");
+        while (word = words.pop()) {
+            line.push(word);
+            tspan.text(line.join(" "));
+            if (tspan.node().getComputedTextLength() > width) {
+                line.pop();
+                tspan.text(line.join(" "));
+                line = [word];
+                tspan = text.append("tspan").attr("x", 0).attr("y", -25).attr("dy", ++lineNumber * lineHeight + dy + "em").text(word);
+            }
+        }
+    })}
+
+function click(d) {
+  flag=!flag
+  if(!flag)
+  {
+    sbt = d3.select("#sidebartext");
+    sbt.attr("opacity", 1);
+    sbt.select("p").text(function(e) { return "2014 Reported CLABSI HAIs: " + d.properties.calbsi2014});
+     sbt.select("p1").text(function(e) { return "2013 Reported CLABSI HAIs: " + d.properties.clasbi2013}); 
+    sbt.select("p2").text(function(e) { return "2012 Reported CLABSI HAIs: " + d.properties.clasbi2012});
+     sbt.select("p3").text(function(e) { return "2011 Reported CLABSI HAIs: " + d.properties.clabsi2011});
+    d3.select(".sidebar")
+    .transition()
+    .duration(0)
+  	.attr("opacity", 0.75)
+    .attr("x", width - (width/3));
+  var x = 0,
+      y = 0,
+      k = 1;
+  }
+  else
+  {
+    sbt.select("p").text(function(e) { return "2014 Reported CLABSI HAIs: " + d.properties.calbsi2014});
+     sbt.select("p1").text(function(e) { return "2013 Reported CLABSI HAIs: " + d.properties.clasbi2013}); 
+    sbt.select("p2").text(function(e) { return "2012 Reported CLABSI HAIs: " + d.properties.clasbi2012});
+     sbt.select("p3").text(function(e) { return "2011 Reported CLABSI HAIs: " + d.properties.clabsi2011});
+    flag=true
+    if (d && centered == d)
+    {
+      d3.select("#sidebartext").select("p").text("")
+      .attr("opacity", 0);
+      d3.select("#sidebartext").select("p1").text("")
+      .attr("opacity", 0)
+      d3.select("#sidebartext").select("p2").text("")
+      .attr("opacity", 0)
+      d3.select("#sidebartext").select("p3").text("")
+      .attr("opacity", 0)
+      d3.select("#sidebartext").select("p4").text("")
+      .attr("opacity", 0)
+      d3.select("#sidebartext").select("p5").text("")
+      .attr("opacity", 0)
+    	d3.select(".sidebar")
+    	.transition()
+    	.duration(0)
+  		.attr("opacity", 0.75)
+    	.attr("x", width + (width/3));
+ 		 }
+     else
+     {
+      flag = false  
+     }
+    	var x = 0,
+      y = 0,
+      k = 1;
+  }
+
+
+  if (d && centered !== d) {
+    var centroid = path.centroid(d);
+    	x = -centroid[0];
+   	  y = -centroid[1];
+      k = 4.5;
+    centered = d;
+ 			} else {
+    		centered = null;
+  		}
+
+  g.selectAll("path")
+      .classed("active", centered && function(d) { return d === centered; });
+  g.selectAll("text")
+      .text(function(d) { return d.properties.abbr; })
+      .classed("active",false);
+  g.selectAll("text")
+      .text(function(d) { return d.properties.name})
+      .classed("active", centered && function(d) { return d === centered; })
+      .call(wrap, 0)
+  		.style('fill')
+  g.transition()
+      .duration(500)
+      .attr("transform", "scale(" + k + ")translate(" + x + "," + y + ")translate(-35,0)")
+      .style("stroke-width", 0.75 / k + "px");
+}
+  
+  }
+</script>
+  <script>
+function cauti(year){
+var flag = true;
+var hits = {};
+var parade = window.histograms.states;
+for (var i = 0 ; i<parade.length ; i++)
+    hits[parade[i].name] = parade[i].hits;
+
+var width = 960,
+    height = 600,
+    centered;
+
+  
+var projection = d3.geo.albersUsa()
+    .scale(width)
+    .translate([0, 0]);
+
+var path = d3.geo.path()
+    .projection(projection);
+
+var svg = d3.select("body").append("svg")
+    .attr("width", width)
+    .attr("height", height);
+
+  // create a text wrapping function
+  
+svg.append("rect")
+    .attr("class", "background")
+    .attr("width", width)
+    .attr("height", height)
+    .on("click", click);
+
+//Create the Scale we will use for the Axis
+ var axisScale = d3.scale.linear()
+                          .domain([0, 3800])
+                          .range([55, 600]);
+
+//Create the Axis
+var xAxis = d3.svg.axis()
+                   .scale(axisScale);
+
+
+//Create an SVG group Element for the Axis elements and call the xAxis function
+var xAxisGroup = svg.append("g")
+                              .call(xAxis)
+.attr("transform", "translate(" + -35 + "," + 570 + ")").style("fill",'white');
+    
+var g = svg.append("g")
+    .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")")
+  .append("g")
+    .attr("id", "states");
+
+d3.json("states.json", function(json) {
+  var heatmap = d3.scale.linear()
+    .domain([0,d3.max(json.features, function(d) { return Math.log(hits[d.properties.abbr] || 1); })])
+    .interpolate(d3.interpolateRgb)
+    .range(["#f3ecfd","violet"])
+  
+  var states = g.selectAll("path")
+    .data(json.features)
+    .enter().append("path")
+    .attr("d", path)
+    .attr("id", function(d) { return d.properties.abbr; })
+    .style("fill", function(d) {
+      if(year == 2011)
+        {
+      return heatmap(Math.log(d.properties.cauti2011 || 1))}
+      if(year == 2012)
+        {
+      return heatmap(Math.log(d.properties.cauti2012 || 1))}
+      if(year == 2013)
+        {
+      return heatmap(Math.log(d.properties.cauti2013 || 1))}
+      if(year == 2014)
+        {
+      return heatmap(Math.log(d.properties.cauti2014 || 1))}
+       })
+    .on("click", click)
+  
+var gradient = svg.append("defs")
+  .append("linearGradient")
+.classed("gradient", true)
+    .attr("id", "gradient")
+    .attr("x1", "-16%")
+    .attr("y1", "100%")
+    .attr("x2", "100%")
+    .attr("y2", "100%")
+    .attr("spreadMethod", "pad");
+
+gradient.append("stop")
+    .attr("offset", "0%")
+    .attr("stop-color", "white")
+    .attr("stop-opacity", 1.64);
+
+gradient.append("stop")
+    .attr("offset", "60%")
+    .attr("stop-color", "violet")
+    .attr("stop-opacity", 1);
+
+var threshold_scale = svg.selectAll("body")
+  	.data(json.features)
+    .enter().append("rect")
+  	.attr("width", 545)
+  	.attr("height", 22)
+  	.attr("x", 20)
+  	.attr("y",550)
+    .style("fill", "url(#gradient)");
+    
+  var labels = g.selectAll("text")
+    .data(json.features)
+    .enter().append("text")
+    .attr("transform", function(d) { return "translate(" + path.centroid(d) + ")"; })
+    .attr("id", function(d) { return 'label-'+d.properties.abbr; })
+    .attr("dy", ".35em")
+    .on("click", click)
+    .text(function(d) { return d.properties.abbr; });
+});
+  ///////////////////////
+  var sidebar = svg.append("rect")
+  	.classed("sidebar", true)
+    .attr("width", width/3)
+    .attr("height", height)
+		.attr("x", function () { return width})
+		.attr("y", 0)
+  	.attr("fill", "	#96cdcd")
+
+      
+  function wrap(text, width) {
+    text.each(function() {
+        var text = d3.select(this),
+        words = text.text().split(/\*+/).reverse(),
+        word,
+        line = [],
+        lineNumber = 0,
+        lineHeight = 4, // ems
+        y = text.attr("y"),
+        dy = parseFloat(text.attr("dy")),
+        tspan = text.text(null).append("tspan").attr("x", 0).attr("y", y).attr("dy", dy + "em");
+        while (word = words.pop()) {
+            line.push(word);
+            tspan.text(line.join(" "));
+            if (tspan.node().getComputedTextLength() > width) {
+                line.pop();
+                tspan.text(line.join(" "));
+                line = [word];
+                tspan = text.append("tspan").attr("x", 0).attr("y", -25).attr("dy", ++lineNumber * lineHeight + dy + "em").text(word);
+            }
+        }
+    })}
+
+function click(d) {
+  flag=!flag
+  if(!flag)
+  {
+   sbt = d3.select("#sidebartext");
+    sbt.attr("opacity", 1);
+    sbt.select("p").text(function(e) { return "2014 Reported CAUTI HAIs: " + d.properties.cauti2014});
+     sbt.select("p1").text(function(e) { return "2013 Reported CAUTI HAIs: " + d.properties.cauti2013}); 
+    sbt.select("p2").text(function(e) { return "2012 Reported CAUTI HAIs: " + d.properties.cauti2012});
+     sbt.select("p3").text(function(e) { return "2011 Reported CAUTI HAIs: " + d.properties.cauti2011});
+    d3.select(".sidebar")
+    .transition()
+    .duration(0)
+  	.attr("opacity", 0.75)
+    .attr("x", width - (width/3));
+  var x = 0,
+      y = 0,
+      k = 1;
+  }
+  else
+  {
+    sbt.select("p").text(function(e) { return "2014 Reported CAUTI HAIs: " + d.properties.cauti2014});
+     sbt.select("p1").text(function(e) { return "2013 Reported CAUTI HAIs: " + d.properties.cauti2013}); 
+    sbt.select("p2").text(function(e) { return "2012 Reported CAUTI HAIs: " + d.properties.cauti2012});
+     sbt.select("p3").text(function(e) { return "2011 Reported CAUTI HAIs: " + d.properties.cauti2011});
+    flag=true
+    if (d && centered == d)
+    {
+      d3.select("#sidebartext").select("p").text("")
+      .attr("opacity", 0);
+      d3.select("#sidebartext").select("p1").text("")
+      .attr("opacity", 0)
+      d3.select("#sidebartext").select("p2").text("")
+      .attr("opacity", 0)
+      d3.select("#sidebartext").select("p3").text("")
+      .attr("opacity", 0)
+      d3.select("#sidebartext").select("p4").text("")
+      .attr("opacity", 0)
+      d3.select("#sidebartext").select("p5").text("")
+      .attr("opacity", 0)
+    	d3.select(".sidebar")
+    	.transition()
+    	.duration(0)
+  		.attr("opacity", 0.75)
+    	.attr("x", width + (width/3));
+ 		 }
+     else
+     {
+      flag = false  
+     }
+    	var x = 0,
+      y = 0,
+      k = 1;
+  }
+
+
+  if (d && centered !== d) {
+    var centroid = path.centroid(d);
+    	x = -centroid[0];
+   	  y = -centroid[1];
+      k = 4.5;
+    centered = d;
+ 			} else {
+    		centered = null;
+  		}
+
+  g.selectAll("path")
+      .classed("active", centered && function(d) { return d === centered; });
+  g.selectAll("text")
+      .text(function(d) { return d.properties.abbr; })
+      .classed("active",false);
+  g.selectAll("text")
+      .text(function(d) { return d.properties.name})
+      .classed("active", centered && function(d) { return d === centered; })
+      .call(wrap, 0)
+  		.style('fill')
+  g.transition()
+      .duration(500)
+      .attr("transform", "scale(" + k + ")translate(" + x + "," + y + ")translate(-35,0)")
+      .style("stroke-width", 0.75 / k + "px");
+}
+  
+  }
+</script>
+  <script>
+    function ssi(year){
+var flag = true;
+var hits = {};
+var parade = window.histograms.states;
+for (var i = 0 ; i<parade.length ; i++)
+    hits[parade[i].name] = parade[i].hits;
+
+var width = 960,
+    height = 600,
+    centered;
+
+  
+var projection = d3.geo.albersUsa()
+    .scale(width)
+    .translate([0, 0]);
+
+var path = d3.geo.path()
+    .projection(projection);
+
+var svg = d3.select("body").append("svg")
+    .attr("width", width)
+    .attr("height", height);
+
+  // create a text wrapping function
+  
+svg.append("rect")
+    .attr("class", "background")
+    .attr("width", width)
+    .attr("height", height)
+    .on("click", click);
+
+//Create the Scale we will use for the Axis
+ var axisScale = d3.scale.linear()
+                          .domain([0, 950])
+                          .range([55, 600]);
+
+//Create the Axis
+var xAxis = d3.svg.axis()
+                   .scale(axisScale);
+
+
+//Create an SVG group Element for the Axis elements and call the xAxis function
+var xAxisGroup = svg.append("g")
+                              .call(xAxis)
+.attr("transform", "translate(" + -35 + "," + 570 + ")").style("fill",'white');
+    
+var g = svg.append("g")
+    .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")")
+  .append("g")
+    .attr("id", "states");
+
+d3.json("states.json", function(json) {
+  var heatmap = d3.scale.linear()
+    .domain([0,d3.max(json.features, function(d) { return Math.log(hits[d.properties.abbr] || 1); })])
+    .interpolate(d3.interpolateRgb)
+    .range(["#e5feeb","green"])
+  
+  var states = g.selectAll("path")
+    .data(json.features)
+    .enter().append("path")
+    .attr("d", path)
+    .attr("id", function(d) { return d.properties.abbr; })
+    .style("fill", function(d) {
+      if(year == 2011)
+        {
+      return heatmap(Math.log(d.properties.ssi2011 || 1))}
+      if(year == 2012)
+        {
+      return heatmap(Math.log(d.properties.ssi2012 || 1))}
+      if(year == 2013)
+        {
+      return heatmap(Math.log(d.properties.ssi2013 || 1))}
+      if(year == 2014)
+        {
+      return heatmap(Math.log(d.properties.ssi2014 || 1))}
+       })
+    .on("click", click)
+  
+var gradient = svg.append("defs")
+  .append("linearGradient")
+.classed("gradient", true)
+    .attr("id", "gradient")
+    .attr("x1", "-16%")
+    .attr("y1", "100%")
+    .attr("x2", "100%")
+    .attr("y2", "100%")
+    .attr("spreadMethod", "pad");
+
+gradient.append("stop")
+    .attr("offset", "0%")
+    .attr("stop-color", "white")
+    .attr("stop-opacity", 1.64);
+
+gradient.append("stop")
+    .attr("offset", "60%")
+    .attr("stop-color", "green")
+    .attr("stop-opacity", 1);
+
+var threshold_scale = svg.selectAll("body")
+  	.data(json.features)
+    .enter().append("rect")
+  	.attr("width", 545)
+  	.attr("height", 22)
+  	  	.attr("x", 20)
+  	.attr("y",550)
+    .style("fill", "url(#gradient)");
+    
+  var labels = g.selectAll("text")
+    .data(json.features)
+    .enter().append("text")
+    .attr("transform", function(d) { return "translate(" + path.centroid(d) + ")"; })
+    .attr("id", function(d) { return 'label-'+d.properties.abbr; })
+    .attr("dy", ".35em")
+    .on("click", click)
+    .text(function(d) { return d.properties.abbr; });
+});
+  ///////////////////////
+  var sidebar = svg.append("rect")
+  	.classed("sidebar", true)
+    .attr("width", width/3)
+    .attr("height", height)
+		.attr("x", function () { return width})
+		.attr("y", 0)
+  	.attr("fill", "	#96cdcd")
+
+      
+  function wrap(text, width) {
+    text.each(function() {
+        var text = d3.select(this),
+        words = text.text().split(/\*+/).reverse(),
+        word,
+        line = [],
+        lineNumber = 0,
+        lineHeight = 4, // ems
+        y = text.attr("y"),
+        dy = parseFloat(text.attr("dy")),
+        tspan = text.text(null).append("tspan").attr("x", 0).attr("y", y).attr("dy", dy + "em");
+        while (word = words.pop()) {
+            line.push(word);
+            tspan.text(line.join(" "));
+            if (tspan.node().getComputedTextLength() > width) {
+                line.pop();
+                tspan.text(line.join(" "));
+                line = [word];
+                tspan = text.append("tspan").attr("x", 0).attr("y", -25).attr("dy", ++lineNumber * lineHeight + dy + "em").text(word);
+            }
+        }
+    })}
+
+function click(d) {
+  flag=!flag
+  if(!flag)
+  {
+    sbt = d3.select("#sidebartext");
+    sbt.attr("opacity", 1);
+sbt.select("p").text(function(e) { return "2014 Reported SSI HAIs: " + d.properties.ssi2014});
+    sbt.select("p1").text(function(e) { return "2013 Reported SSI HAIs: " + d.properties.ssi2013});
+    sbt.select("p2").text(function(e) { return "2013 Reported SSI HAIs: " + d.properties.ssi2012});
+    sbt.select("p3").text(function(e) { return "2011 Reported SSI HAIs: " + d.properties.ssi2011});
+    d3.select(".sidebar")
+    .transition()
+    .duration(0)
+  	.attr("opacity", 0.75)
+    .attr("x", width - (width/3));
+  var x = 0,
+      y = 0,
+      k = 1;
+  }
+  else
+  {
+sbt.select("p").text(function(e) { return "2014 Reported SSI HAIs: " + d.properties.ssi2014});
+    sbt.select("p1").text(function(e) { return "2013 Reported SSI HAIs: " + d.properties.ssi2013});
+    sbt.select("p2").text(function(e) { return "2013 Reported SSI HAIs: " + d.properties.ssi2012});
+    sbt.select("p3").text(function(e) { return "2011 Reported SSI HAIs: " + d.properties.ssi2011});
+
+    flag=true
+    if (d && centered == d)
+    {
+      d3.select("#sidebartext").select("p").text("")
+      .attr("opacity", 0);
+      d3.select("#sidebartext").select("p1").text("")
+      .attr("opacity", 0)
+      d3.select("#sidebartext").select("p2").text("")
+      .attr("opacity", 0)
+      d3.select("#sidebartext").select("p3").text("")
+      .attr("opacity", 0)
+      d3.select("#sidebartext").select("p4").text("")
+      .attr("opacity", 0)
+      d3.select("#sidebartext").select("p5").text("")
+      .attr("opacity", 0)
+    	d3.select(".sidebar")
+    	.transition()
+    	.duration(0)
+  		.attr("opacity", 0.75)
+    	.attr("x", width + (width/3));
+ 		 }
+     else
+     {
+      flag = false  
+     }
+    	var x = 0,
+      y = 0,
+      k = 1;
+  }
+
+
+  if (d && centered !== d) {
+    var centroid = path.centroid(d);
+    	x = -centroid[0];
+   	  y = -centroid[1];
+      k = 4.5;
+    centered = d;
+ 			} else {
+    		centered = null;
+  		}
+
+  g.selectAll("path")
+      .classed("active", centered && function(d) { return d === centered; });
+  g.selectAll("text")
+      .text(function(d) { return d.properties.abbr; })
+      .classed("active",false);
+  g.selectAll("text")
+      .text(function(d) { return d.properties.name})
+      .classed("active", centered && function(d) { return d === centered; })
+      .call(wrap, 0)
+  		.style('fill')
+  g.transition()
+      .duration(500)
+      .attr("transform", "scale(" + k + ")translate(" + x + "," + y + ")translate(-35,0)")
+      .style("stroke-width", 0.75 / k + "px");
+}
+  
+  }
+  function myFunction() {
+    window.open("http://healthcare-associatedinfections.webs.com/  ");
+}
+</script>
+     
